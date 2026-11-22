@@ -463,7 +463,7 @@ footer .wrap{display:grid;gap:22px}
             <div class="eyebrow" style="color:var(--lav)">Your estimate</div>
             <div class="big" id="calcTotal">N$0</div>
             <div id="calcLocal" style="font-size:.9rem;color:#e2d6ea"></div>
-            <p>Excl. VAT. For sessions outside Windhoek, travel is included in one combined quote.</p>
+            <p>Excl. VAT. Travel costs for sessions outside Windhoek, including international travel, are added to your invoice.</p>
             <button class="btn btn-primary" style="margin-top:14px;width:100%;justify-content:center" id="calcBook">Book this estimate</button>
           </div>
         </div>
@@ -986,7 +986,7 @@ function renderPricing(){
   $('#services').innerHTML = SITE.services.map(s => card(s)).join('');
   $('#packCards').innerHTML = SITE.packages.map(s => card(s, true)).join('');
   $('#crumbs').innerHTML = SITE.services.concat(SITE.packages.filter(p => !p.calc)).map(s => `<span class="crumb">${esc(s.name)} <em>· ${esc(priceText(s))}</em></span>`).join('');
-  $('#rateNote').innerHTML = `<b>All prices exclude VAT.</b> Namibian dollar (N$) prices are the official quote. The day rate is N$9,000 – N$14,000 (about US$550 – US$850). Half-day executive sessions are available online. Other currencies are indicative conversions at ${esc(SITE.rates.date)} rates. For sessions outside Windhoek, travel is included in one combined quote.`;
+  $('#rateNote').innerHTML = `<b>All prices exclude VAT.</b> Travel costs for sessions outside Windhoek, including international travel, are added to your invoice.`;
   calcUpdate();
 }
 
@@ -1169,7 +1169,7 @@ function guideHTML(s, cur){
     <dl class="kv"><dt>Duration</dt><dd>${esc(s.dur)}</dd><dt>Price</dt><dd><b>${esc(priceText(s))}</b> excl. VAT${local}${s.perDay ? `<br><span style="font-size:.82rem;color:var(--muted)">${esc(s.perDay)} per day</span>` : ''}</dd>
     <dt>Best for</dt><dd>${esc(s.who)}</dd><dt>You leave with</dt><dd>${esc(s.out)}</dd></dl>
     <ol class="steps"><li><b>Send your request and background.</b> Share some background on your organisation, the challenge, your preferred date, the number of participants and whether you prefer in person or online.</li><li><b>Confirm the scope.</b> Dr Hlahla confirms the date, focus and final quote with you.</li><li><b>The session.</b> Delivered on-site or online, focused on a practical way forward.</li></ol>
-    <p class="tiny">Prices exclude VAT. For sessions outside Windhoek, travel is included in one combined quote.</p>
+    <p class="tiny">Prices exclude VAT. Travel costs for sessions outside Windhoek, including international travel, are added to your invoice.</p>
     <button type="button" class="btn btn-dark" id="toForm" style="width:100%;justify-content:center;margin-top:12px">Continue to booking</button></div>`;
 }
 function openBook(type, opts = {}){
