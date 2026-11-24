@@ -768,7 +768,7 @@ const SITE = {
     languages: "English · Shona", tools: "Microsoft Word · Excel · PowerPoint · Email · Databases · Internet research tools"
   },
   services: [
-    { id: "capacity", img: "", /* drop-in: img/capacity-assessment.jpg */ name: "Capacity assessment", dur: "Before any session", nad: 9000, nadMax: 10000, unit: "per assessment",
+    { id: "capacity", img: "", /* drop-in: img/capacity-assessment.jpg */ name: "Capacity assessment", dur: "Before any session", nad: 8000, nadMax: 14000, usd: [500, 850], unit: "per assessment",
       blurb: "Examine the problem, find the right solution and agree the way forward with you, before any session or meeting begins.",
       inc: ["Examination of the problem", "Solution design", "Consultation with you before delivery"],
       who: "Organisations that want the real problem diagnosed before committing to a session or programme.", out: "A clear diagnosis, a recommended solution and an agreed plan before delivery starts." },
@@ -953,6 +953,7 @@ function money(nad, cur = 'NAD'){
 }
 function priceText(s, cur = 'NAD'){
   if (s.nad == null) return 'Quote on request';
+  if (cur === 'USD' && s.usd) return `US$${s.usd[0]} – US$${s.usd[1]}` + (s.unit ? ' ' + s.unit : '');
   const pre = s.from ? 'From ' : '';
   return (s.nadMax ? `${money(s.nad, cur)} – ${money(s.nadMax, cur)}` : pre + money(s.nad, cur)) + (s.unit ? ' ' + s.unit : '');
 }
@@ -984,7 +985,7 @@ function renderPricing(){
     <div class="card-img${s.img ? '' : ' ph'}">${s.img ? `<img src="${esc(s.img)}" alt="${esc(s.name)}" loading="lazy">` : `<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="270" cy="20" r="90" fill="none" stroke="#b9a0cc" stroke-opacity=".5"/><circle cx="270" cy="20" r="60" fill="none" stroke="#b9a0cc" stroke-opacity=".3"/><path d="M0 150 C 90 110, 190 190, 320 130 L320 180 L0 180Z" fill="#f4eff8" fill-opacity=".14"/><text x="22" y="56" font-family="Montserrat,Arial,sans-serif" font-weight="800" font-size="34" fill="#f4eff8" fill-opacity=".9">${esc(s.name.split(' ').map(w => w[0]).join('').slice(0, 3).toUpperCase())}</text></svg>`}</div>
     <div class="meta">${pack ? 'Package' : 'Session'}</div><h3 style="margin-top:6px">${esc(s.name)}</h3><span class="dur">⏱ ${esc(s.dur)}</span>
     <p>${esc(s.blurb)}</p>${s.inc ? `<ul>${s.inc.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}
-    <div class="price">${s.calc ? 'Build your estimate' : `${currency !== 'NAD' && s.nad ? approx(currency) : ''}${esc(priceText(s, currency))}${s.nad ? '<span class="vat">EXCL. VAT</span>' : ''}`}
+    <div class="price">${s.calc ? 'Build your estimate' : `${currency !== 'NAD' && s.nad && !(currency === 'USD' && s.usd) ? approx(currency) : ''}${esc(priceText(s, currency))}${s.nad ? '<span class="vat">EXCL. VAT</span>' : ''}`}
       ${currency !== 'NAD' && s.nad ? `<small>${esc(priceText(s))} excl. VAT</small>` : ''}</div>
     ${s.calc ? `<a class="btn btn-dark" href="#custom">Open calculator</a>` : `<button class="btn btn-dark" data-book="${esc(s.id)}">${esc(s.cta || 'Book this')}</button>`}</div>`;
   $('#services').innerHTML = SITE.services.map(s => card(s)).join('');
@@ -1168,7 +1169,7 @@ $('#bType').innerHTML = ALL.map(s => `<option value="${s.id}">${esc(s.name)} (${
 $('#bCur').innerHTML = Object.entries(RT).map(([k, v]) => `<option value="${k}">${k} · ${esc(v.name)}</option>`).join('');
 try { $('#bDate').min = new Date().toISOString().slice(0, 10); } catch {}
 function guideHTML(s, cur){
-  const local = cur !== 'NAD' && s.nad ? ` <span style="color:var(--muted)">(${approx(cur)}${esc(priceText(s, cur))})</span>` : '';
+  const local = cur !== 'NAD' && s.nad ? ` <span style="color:var(--muted)">(${cur === 'USD' && s.usd ? '' : approx(cur)}${esc(priceText(s, cur))})</span>` : '';
   return `<div class="guide"><div class="meta">Session guide</div><h3 style="font-size:1.05rem;margin-top:4px">${esc(s.name)}</h3>
     <dl class="kv"><dt>Duration</dt><dd>${esc(s.dur)}</dd><dt>Price</dt><dd><b>${esc(priceText(s))}</b>${s.nad ? ' excl. VAT' : ''}${local}${s.perDay ? `<br><span style="font-size:.82rem;color:var(--muted)">${esc(s.perDay)} per day</span>` : ''}</dd>
     <dt>Best for</dt><dd>${esc(s.who)}</dd><dt>You leave with</dt><dd>${esc(s.out)}</dd></dl>
@@ -1419,7 +1420,7 @@ const Globe = (() => {
     const chips = `<div class="chips">${SITE.countries.map(c => `<button class="chip ${sel === c.code ? 'on' : ''}" data-country="${c.code}">${esc(c.name)}</button>`).join('')}</div>`;
     if (!sel) { panel.innerHTML = `<div class="meta">${SITE.countries.length} countries</div><h3 style="margin-top:6px">A growing footprint</h3><p style="margin-top:10px">Tap a highlighted country on the globe, or pick one below. The next pin could be yours.</p>${chips}${legend}`; return; }
     const c = byCode[sel], cur = c.cur, rc = RT[cur];
-    const rows = ALL.filter(s => s.nad).map(s => `<div class="row"><span>${esc(s.name)}</span><b>${cur !== 'NAD' && rc.r !== 1 ? '≈ ' : ''}${esc(priceText(s, cur))}</b></div>`).join('');
+    const rows = ALL.filter(s => s.nad).map(s => `<div class="row"><span>${esc(s.name)}</span><b>${cur !== 'NAD' && rc.r !== 1 && !(cur === 'USD' && s.usd) ? '≈ ' : ''}${esc(priceText(s, cur))}</b></div>`).join('');
     panel.innerHTML = `<h3>${esc(c.name)}</h3><span class="tag">${esc(SITE.cats[c.cat].label)}</span><span class="tag alt">Prices in ${esc(cur)}</span><p>${esc(c.summary)}</p>
       <ul>${c.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
       <div class="local-prices"><div class="meta" style="margin-bottom:4px">Sessions in ${esc(rc.name)}s · excl. VAT</div>${rows}
