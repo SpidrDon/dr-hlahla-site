@@ -447,7 +447,7 @@ footer .wrap{display:grid;gap:22px}
       <div class="reveal"><div class="eyebrow">Ways to engage</div><h2>Sessions &amp; pricing</h2>
         <p class="sub">Focused engagements built around one principle: even in a few hours, you leave with real direction.</p>
         <div class="cur-bar" id="curBar"></div></div>
-      <div class="grid g4" id="services"></div>
+      <div class="grid g3" id="services"></div>
 
       <div id="packages">
         <h3 class="subhead reveal">Conference &amp; retreat packages</h3>
@@ -768,6 +768,10 @@ const SITE = {
     languages: "English · Shona", tools: "Microsoft Word · Excel · PowerPoint · Email · Databases · Internet research tools"
   },
   services: [
+    { id: "capacity", img: "", /* drop-in: img/capacity-assessment.jpg */ name: "Capacity assessment", dur: "Before any session", nad: 9000, nadMax: 10000, unit: "per assessment",
+      blurb: "Examine the problem, find the right solution and agree the way forward with you, before any session or meeting begins.",
+      inc: ["Examination of the problem", "Solution design", "Consultation with you before delivery"],
+      who: "Organisations that want the real problem diagnosed before committing to a session or programme.", out: "A clear diagnosis, a recommended solution and an agreed plan before delivery starts." },
     { id: "exec", img: "img/exec-session.jpg", /* drop-in: img/exec-session.jpg */ name: "Half-day executive session", dur: "4–6 hrs · in person or online", nad: 9000, nadMax: 14000, unit: "per day",
       blurb: "Diagnose the issue, align your leaders and leave with a clear, practical way forward.",
       inc: ["Leadership, strategy or change focus", "Available online or in person"],
