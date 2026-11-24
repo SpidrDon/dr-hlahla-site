@@ -784,10 +784,10 @@ const SITE = {
       blurb: "Facilitated strategic planning that turns strategy into action for executive teams, councils and ministries.",
       inc: ["Strategic & business plans", "N$9,000 – N$14,000 per day"],
       who: "Executive teams, councils and ministries planning or reviewing strategy.", out: "A strategy your team owns, with practical implementation steps." },
-    { id: "review", img: "img/policy-review.jpg", /* drop-in: img/policy-review.jpg */ name: "Policy & structure review", dur: "Scoped to your brief", nad: null,
-      blurb: "HR policy, organisational structure and capacity reviews, the work behind assignments for NAMDIA, NamibRe, Meatco and more.",
-      inc: ["HR policy & structures", "Capacity assessment"],
-      who: "Organisations reviewing HR policies, structures or capacity.", out: "Reviewed policies or structures with clear, actionable recommendations." }
+    { id: "review", img: "img/policy-review.jpg", name: "Policy & structure review", dur: "Extended study · scoped to your brief", nad: null, cta: "Request a quote",
+      blurb: "An in-depth study of your HR policies, organisational structure and capacity, carried out over an extended period so that every area that needs attention is covered. A combined package that draws on the other services as your organisation needs.",
+      inc: ["In-depth study of the issue", "Extended timeframe to cover every area", "Combined package, built around your needs"],
+      who: "Organisations that need a thorough, end-to-end review of policies, structures or capacity.", out: "A complete review with clear, actionable recommendations, delivered as one combined package." }
   ],
   packages: [
     { id: "conf", img: "img/conference-session.jpg", /* drop-in: img/conference-session.jpg */ name: "Conference session or workshop", dur: "Half-day · 4–6 hrs", nad: null,
@@ -986,7 +986,7 @@ function renderPricing(){
     <p>${esc(s.blurb)}</p>${s.inc ? `<ul>${s.inc.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}
     <div class="price">${s.calc ? 'Build your estimate' : `${currency !== 'NAD' && s.nad ? approx(currency) : ''}${esc(priceText(s, currency))}${s.nad ? '<span class="vat">EXCL. VAT</span>' : ''}`}
       ${currency !== 'NAD' && s.nad ? `<small>${esc(priceText(s))} excl. VAT</small>` : ''}</div>
-    ${s.calc ? `<a class="btn btn-dark" href="#custom">Open calculator</a>` : `<button class="btn btn-dark" data-book="${esc(s.id)}">Book this</button>`}</div>`;
+    ${s.calc ? `<a class="btn btn-dark" href="#custom">Open calculator</a>` : `<button class="btn btn-dark" data-book="${esc(s.id)}">${esc(s.cta || 'Book this')}</button>`}</div>`;
   $('#services').innerHTML = SITE.services.map(s => card(s)).join('');
   $('#packCards').innerHTML = SITE.packages.map(s => card(s, true)).join('');
   $('#crumbs').innerHTML = SITE.services.concat(SITE.packages.filter(p => !p.calc)).map(s => `<span class="crumb">${esc(s.name)} <em>· ${esc(priceText(s))}</em></span>`).join('');
