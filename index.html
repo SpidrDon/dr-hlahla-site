@@ -1170,7 +1170,7 @@ try { $('#bDate').min = new Date().toISOString().slice(0, 10); } catch {}
 function guideHTML(s, cur){
   const local = cur !== 'NAD' && s.nad ? ` <span style="color:var(--muted)">(${approx(cur)}${esc(priceText(s, cur))})</span>` : '';
   return `<div class="guide"><div class="meta">Session guide</div><h3 style="font-size:1.05rem;margin-top:4px">${esc(s.name)}</h3>
-    <dl class="kv"><dt>Duration</dt><dd>${esc(s.dur)}</dd><dt>Price</dt><dd><b>${esc(priceText(s))}</b> excl. VAT${local}${s.perDay ? `<br><span style="font-size:.82rem;color:var(--muted)">${esc(s.perDay)} per day</span>` : ''}</dd>
+    <dl class="kv"><dt>Duration</dt><dd>${esc(s.dur)}</dd><dt>Price</dt><dd><b>${esc(priceText(s))}</b>${s.nad ? ' excl. VAT' : ''}${local}${s.perDay ? `<br><span style="font-size:.82rem;color:var(--muted)">${esc(s.perDay)} per day</span>` : ''}</dd>
     <dt>Best for</dt><dd>${esc(s.who)}</dd><dt>You leave with</dt><dd>${esc(s.out)}</dd></dl>
     <ol class="steps"><li><b>Send your request and background.</b> Share some background on your organisation, the challenge, your preferred date, the number of participants and whether you prefer in person or online.</li><li><b>Confirm the scope.</b> Dr Hlahla confirms the date, focus and final quote with you.</li><li><b>The session.</b> Delivered on-site or online, focused on a practical way forward.</li></ol>
     <p class="tiny">Prices exclude VAT. Travel costs for sessions outside Windhoek, including international travel, are added to your invoice.</p>
